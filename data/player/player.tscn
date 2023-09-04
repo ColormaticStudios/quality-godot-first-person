@@ -1,0 +1,64 @@
+[gd_scene load_steps=9 format=3 uid="uid://cwiu8nsyij4gn"]
+
+[ext_resource type="Script" path="res://data/player/player.gd" id="1_u1w3t"]
+[ext_resource type="Texture2D" uid="uid://bubwl36108v2r" path="res://data/cursors/crosshair001.png" id="2_nq3sk"]
+
+[sub_resource type="Animation" id="Animation_saxjg"]
+resource_name = "head_bob"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.239392, 1, 0, -0.1, 0, 0.5, 1, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_1m4wq"]
+resource_name = "reset"
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0.00870516, 1, 0, 0, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_36ogt"]
+_data = {
+"head_bob": SubResource("Animation_saxjg"),
+"reset": SubResource("Animation_1m4wq")
+}
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_phygr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3iwsb"]
+albedo_color = Color(0.917647, 0.529412, 0.168627, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_3oyv7"]
+material = SubResource("StandardMaterial3D_3iwsb")
+
+[node name="player" type="CharacterBody3D"]
+script = ExtResource("1_u1w3t")
+
+[node name="head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+
+[node name="camera" type="Camera3D" parent="head"]
+
+[node name="camera_animation" type="AnimationPlayer" parent="head/camera"]
+libraries = {
+"": SubResource("AnimationLibrary_36ogt")
+}
+
+[node name="collision" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_phygr")
+
+[node name="hud_camera" type="Camera2D" parent="."]
+
+[node name="crosshair" type="Sprite2D" parent="hud_camera"]
+texture = ExtResource("2_nq3sk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_3oyv7")
