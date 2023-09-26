@@ -37,11 +37,11 @@ func _ready():
 	parts.camera.current = true
 
 func _process(delta):
-	if Input.is_action_pressed("move_sprint") and !Input.is_action_pressed("move_crouch"):
+	if Input.is_action_pressed("move_sprint") and !Input.is_action_pressed("move_crouch") and sprint_enabled:
 		sprinting = true
 		speed = sprint_speed
 		parts.camera.fov = lerp(parts.camera.fov, camera_fov_extents[1], 10*delta)
-	elif Input.is_action_pressed("move_crouch") and !Input.is_action_pressed("move_sprint"):
+	elif Input.is_action_pressed("move_crouch") and !Input.is_action_pressed("move_sprint") and sprint_enabled:
 		crouching = true
 		speed = crouch_speed
 		parts.body.scale.y = lerp(parts.body.scale.y, crouch_player_y_scale, 10*delta) #change this to starting a crouching animation or whatever
@@ -50,9 +50,11 @@ func _process(delta):
 		sprinting = false
 		crouching = false
 		speed = base_speed
-		parts.camera.fov = lerp(parts.camera.fov, camera_fov_extents[0], 10*delta)
-		parts.body.scale.y = lerp(parts.body.scale.y, base_player_y_scale, 10*delta) #see comment on line 48
-		parts.collision.scale.y = lerp(parts.collision.scale.y, base_player_y_scale, 10*delta)
+		if sprint_enabled:
+			parts.camera.fov = lerp(parts.camera.fov, camera_fov_extents[0], 10*delta)
+		if crouch_enabled:
+			parts.body.scale.y = lerp(parts.body.scale.y, base_player_y_scale, 10*delta) #see comment on line 48
+			parts.collision.scale.y = lerp(parts.collision.scale.y, base_player_y_scale, 10*delta)
 
 func _physics_process(delta):
 	if not is_on_floor():
