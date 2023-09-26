@@ -1,20 +1,29 @@
 extends CharacterBody3D
 
 
+@export var sprint_enabled = true
+@export var crouch_enabled = true
+
 @export var base_speed = 5
 @export var sprint_speed = 8
 @export var jump_velocity = 4
 @export var sensitivity = 0.1
 @export var accel = 10
+@export var crouch_speed = 3
 var speed = base_speed
 var sprinting = false
+var crouching = false
 var camera_fov_extents = [75.0, 85.0] #index 0 is normal, index 1 is sprinting
+var base_player_y_scale = 1.0
+var crouch_player_y_scale = 0.75
 
 
 @onready var parts = {
 	"head": $head,
 	"camera": $head/camera,
-	"camera_animation": $head/camera/camera_animation
+	"camera_animation": $head/camera/camera_animation,
+	"body": $body,
+	"collision": $collision
 }
 @onready var world = get_parent()
 
@@ -28,14 +37,22 @@ func _ready():
 	parts.camera.current = true
 
 func _process(delta):
-	if Input.is_action_pressed("move_sprint"):
+	if Input.is_action_pressed("move_sprint") and !Input.is_action_pressed("move_crouch"):
 		sprinting = true
 		speed = sprint_speed
 		parts.camera.fov = lerp(parts.camera.fov, camera_fov_extents[1], 10*delta)
+	elif Input.is_action_pressed("move_crouch") and !Input.is_action_pressed("move_sprint"):
+		crouching = true
+		speed = crouch_speed
+		parts.body.scale.y = lerp(parts.body.scale.y, crouch_player_y_scale, 10*delta) #change this to starting a crouching animation or whatever
+		parts.collision.scale.y = lerp(parts.collision.scale.y, crouch_player_y_scale, 10*delta)
 	else:
 		sprinting = false
+		crouching = false
 		speed = base_speed
 		parts.camera.fov = lerp(parts.camera.fov, camera_fov_extents[0], 10*delta)
+		parts.body.scale.y = lerp(parts.body.scale.y, base_player_y_scale, 10*delta) #see comment on line 48
+		parts.collision.scale.y = lerp(parts.collision.scale.y, base_player_y_scale, 10*delta)
 
 func _physics_process(delta):
 	if not is_on_floor():

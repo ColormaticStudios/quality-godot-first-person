@@ -60,5 +60,5 @@ shape = SubResource("CapsuleShape3D_phygr")
 [node name="crosshair" type="Sprite2D" parent="hud_camera"]
 texture = ExtResource("2_nq3sk")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="body" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_3oyv7")

@@ -18,7 +18,7 @@ sky = SubResource("Sky_cvyow")
 ssao_enabled = true
 fog_light_energy = 0.1
 volumetric_fog_enabled = true
-volumetric_fog_density = 0.01
+volumetric_fog_density = 0.02
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jxrtg"]
 albedo_texture = ExtResource("3_hpn24")
