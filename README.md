@@ -13,6 +13,7 @@ Move with WASD, space to jump, shift to sprint, control to crouch.
  - FOV smoothing
  - Head bobbing
  - Crouching
+ - Sprinting
  
  ![editor screenshot](https://i.ibb.co/X5P34h0/fpc-screenshot.png)
 
