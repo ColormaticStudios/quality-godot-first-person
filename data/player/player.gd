@@ -60,7 +60,8 @@ func _physics_process(delta: float) -> void:
     move_character(delta)
 
 func _input(event: InputEvent) -> void:
-    handle_mouse_movement(event)
+    if event is InputEventMouseMotion:
+        handle_mouse_movement(event)
 
 # Movement Logic
 func handle_movement_input(delta: float) -> void:
@@ -114,8 +115,7 @@ func handle_jump() -> void:
 
 func move_character(delta: float) -> void:
     var input_dir: Vector2 = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
-    var direction: Vector3 = input_dir.normalized().rotated(-parts["head"].rotation.y)
-    direction = Vector3(direction.x, 0, direction.y)
+    var direction: Vector3 = Vector3(input_dir.x, 0, input_dir.y)
     if is_on_floor():
         velocity.x = lerp(velocity.x, direction.x * speed, accel * delta)
         velocity.z = lerp(velocity.z, direction.z * speed, accel * delta)
