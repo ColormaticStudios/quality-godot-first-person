@@ -67,7 +67,7 @@ func _input(event: InputEvent) -> void:
 func handle_movement_input(delta: float) -> void:
 	if Input.is_action_pressed("move_sprint") and !Input.is_action_pressed("move_crouch") and sprint_enabled:
 		enter_sprint_state(delta)
-	elif Input.is_action_pressed("move_crouch") and !Input.is_action_pressed("move_sprint") and sprint_enabled:
+	elif Input.is_action_pressed("move_crouch") and !Input.is_action_pressed("move_sprint") and crouch_enabled:
 		enter_crouch_state(delta)
 	else:
 		enter_normal_state(delta)
