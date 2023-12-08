@@ -66,11 +66,13 @@ func _input(event: InputEvent) -> void:
 # Movement Logic
 func handle_movement_input(delta: float) -> void:
 	if Input.is_action_pressed("move_sprint") and !Input.is_action_pressed("move_crouch") and sprint_enabled:
-		enter_sprint_state(delta)
+		if !$crouch_roof_detect.is_colliding(): #if the player is crouching and underneath a ceiling that is too low, don't let the player stand up
+			enter_sprint_state(delta)
 	elif Input.is_action_pressed("move_crouch") and !Input.is_action_pressed("move_sprint") and crouch_enabled:
 		enter_crouch_state(delta)
 	else:
-		enter_normal_state(delta)
+		if !$crouch_roof_detect.is_colliding(): #if the player is crouching and underneath a ceiling that is too low, don't let the player stand up
+			enter_normal_state(delta)
 
 func enter_sprint_state(delta: float) -> void:
 	state = "sprinting"

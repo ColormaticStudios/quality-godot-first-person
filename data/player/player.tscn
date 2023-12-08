@@ -62,3 +62,6 @@ texture = ExtResource("2_nq3sk")
 
 [node name="body" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_3oyv7")
+
+[node name="crouch_roof_detect" type="RayCast3D" parent="."]
+target_position = Vector3(0, 1, 0)
