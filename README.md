@@ -1,4 +1,10 @@
 # quality-godot-first-person
+
+!IMPORTANT!  
+Development stopped for this version a while ago, I just forgot to update this page.  
+Check out https://github.com/ColormaticStudios/quality-godot-first-person-2  
+That is an actively maintained FPC.
+
 Actually good first person controller for Godot 4.1
 MIT License (credit Colormatic Studios)
 
